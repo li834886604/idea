@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+<!--    发布服务的名称-->
+    <dubbo:application name="dubbo_provide"/>
+<!--    注册中心-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+<!--    service :注册上去服务
+        interface:发布服务的接口
+        ref:spring容器的bean对象
+        奖励通过这个interface调用服务时,就来调用spring容器中的对象的方法-->
+    <dubbo:service interface="com.llt.service.UserService"
+                   ref="userService"/>
+<!--    服务真正的提供者-->
+    <bean id="userService" class="com.llt.service.impl.UserServiceImpl"/>
+<!--注入spring-service.xml-->
+    <import resource="classpath:spring-service.xml"/>
+
+</beans>
